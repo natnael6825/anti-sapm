@@ -33,40 +33,48 @@ const defineAntiBotElement = () => {
         }
         .wrapper {
           display: grid;
-          gap: 1.25rem;
+          gap: 1.5rem;
         }
         .hint {
-          font-size: 0.9rem;
-          color: #4b5563;
+          font-size: 0.85rem;
+          color: #059669;
+          font-weight: 600;
+          background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), rgba(14, 165, 233, 0.1));
+          padding: 0.75rem 1rem;
+          border-radius: 12px;
+          border: 1px solid rgba(16, 185, 129, 0.2);
         }
         form {
           display: grid;
-          gap: 1rem;
+          gap: 1.25rem;
           font-family: inherit;
         }
         label {
           display: grid;
-          gap: 0.35rem;
+          gap: 0.5rem;
           font-size: 0.95rem;
-          font-weight: 600;
+          font-weight: 700;
           color: #111827;
         }
         input,
         textarea {
           width: 100%;
-          border: 1px solid #e5e7eb;
-          border-radius: 12px;
-          padding: 0.75rem 0.9rem;
+          border: 2px solid #e5e7eb;
+          border-radius: 14px;
+          padding: 0.85rem 1rem;
           font-size: 1rem;
           font-family: inherit;
           background: #ffffff;
-          transition: border-color 0.2s ease, box-shadow 0.2s ease;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         input:focus,
         textarea:focus {
           outline: none;
-          border-color: #0f766e;
-          box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+          border-color: transparent;
+          background: linear-gradient(white, white) padding-box,
+                      linear-gradient(135deg, #10b981, #0ea5e9) border-box;
+          box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15), 0 4px 12px rgba(16, 185, 129, 0.1);
+          transform: translateY(-1px);
         }
         textarea {
           min-height: 140px;
@@ -74,7 +82,7 @@ const defineAntiBotElement = () => {
         }
         .row {
           display: grid;
-          gap: 0.75rem;
+          gap: 1rem;
         }
         .actions {
           display: flex;
@@ -84,18 +92,36 @@ const defineAntiBotElement = () => {
           flex-wrap: wrap;
         }
         button {
+          position: relative;
           border: none;
           border-radius: 999px;
-          padding: 0.75rem 1.5rem;
-          font-weight: 600;
+          padding: 0.85rem 1.75rem;
+          font-weight: 700;
+          font-size: 0.95rem;
           color: #ffffff;
-          background: #0f766e;
+          background: linear-gradient(135deg, #0f766e 0%, #0ea5e9 100%);
           cursor: pointer;
-          transition: transform 0.15s ease, box-shadow 0.2s ease;
+          box-shadow: 0 4px 16px rgba(15, 118, 110, 0.3);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          overflow: hidden;
+        }
+        button::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+          opacity: 0;
+          transition: opacity 0.3s ease;
         }
         button:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 8px 18px rgba(15, 118, 110, 0.2);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(15, 118, 110, 0.4);
+        }
+        button:hover::before {
+          opacity: 1;
+        }
+        button:active {
+          transform: translateY(0);
         }
         button:disabled {
           opacity: 0.6;
@@ -104,8 +130,9 @@ const defineAntiBotElement = () => {
           transform: none;
         }
         .footnote {
-          font-size: 0.8rem;
+          font-size: 0.75rem;
           color: #6b7280;
+          font-weight: 500;
         }
         .hp {
           position: absolute;
@@ -120,7 +147,7 @@ const defineAntiBotElement = () => {
 
       const hint = document.createElement('div');
       hint.className = 'hint';
-      hint.textContent = 'This form lives in a closed Shadow DOM and uses randomized field markers.';
+      hint.textContent = '🔐 This form uses closed Shadow DOM with randomized field markers.';
 
       const form = document.createElement('form');
       form.setAttribute('autocomplete', 'on');
@@ -262,9 +289,11 @@ export const AntiBotForm = ({ ready, onSubmit }: AntiBotFormProps) => {
 
   if (!ready) {
     return (
-      <div className="rounded-3xl border border-dashed border-emerald-300 bg-white/70 p-6 text-sm text-slate-600">
-        <p className="font-semibold text-slate-800">Unlocking secure form...</p>
-        <p className="mt-2">
+      <div className="rounded-2xl border-2 border-dashed border-emerald-400 bg-gradient-to-br from-white to-emerald-50/50 p-6 text-sm shadow-md glow-border">
+        <p className="font-bold text-base text-slate-900 flex items-center gap-2">
+          <span className="text-xl">🔒</span> Unlocking secure form...
+        </p>
+        <p className="mt-3 leading-relaxed text-slate-700">
           Move your mouse, scroll, and type once. The form appears after a few seconds of
           human-like activity.
         </p>
